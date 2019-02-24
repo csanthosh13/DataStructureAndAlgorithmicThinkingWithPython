@@ -15,19 +15,19 @@ class Node:
         self.data = data
         self.next = None
          # method for setting the data field of the node    
-    def setData(self, data):
+    def set_data(self, data):
         self.data = data
     # method for getting the data field of the node   
-    def getData(self):
+    def get_data(self):
         return self.data
       # method for setting the next field of the node
-    def setNext(self, next):
+    def set_next(self, next):
         self.next = next
        # method for getting the next field of the node    
-    def getNext(self):
+    def get_next(self):
         return self.next
     # returns true if the node points to another node
-    def hasNext(self):
+    def has_next(self):
             return self.next != None
 
 # class for defining a linked list   
@@ -158,6 +158,10 @@ class LinkedList(object):
  
         if pos > self.length or pos < 0:
             print "The position does not exist. Please enter a valid position"
+        # to deletle the first position of the linkedlist
+        elif pos == 1:
+            self.delete_beg()
+            self.length -= 1
         else:        
             while currentnode.next != None or count < pos:
                 count = count + 1
@@ -221,84 +225,6 @@ class LinkedList(object):
             currentnode = currentnode.next 
              
         print nodeList  
-
-class BSTNode:
-    def __init__(root, data=None):
-        root.left = None
-        root.right = None
-        root.data = data
-
-def insertNode(root, node):
-    if root is None:
-        root = node
-    else:
-        if root.data > node.data:
-            if root.left == None:
-                root.left = node
-            else:
-                insertNode(root.left, node)
-        else:
-            if root.right == None:
-                root.right = node
-            else:
-                insertNode(root.right, node)
-
-def deleteNode(root, data):
-	""" delete the node with the given data and return the root node of the tree """	    
-	if root.data == data:
-		# found the node we need to delete
-		if root.right and root.left: 
-			# get the successor node and its parent 
-			[psucc, succ] = findMin(root.right, root)
-			# splice out the successor
-			# (we need the parent to do this) 
-			if psucc.left == succ:
-				psucc.left = succ.right
-			else:
-				psucc.right = succ.right					
-			# reset the left and right children of the successor
-			succ.left = root.left
-			succ.right = root.right
-			return succ                
-		else:
-			# "easier" case
-			if root.left:
-				return root.left  # promote the left subtree
-			else:
-				return root.right  # promote the right subtree 
-	else:
-		if root.data > data:  # data should be in the left subtree
-			if root.left:
-				root.left = deleteNode(root.left, data)
-			# else the data is not in the tree 
-		else:  # data should be in the right subtree
-			if root.right:
-				root.right = deleteNode(root.right, data)
-	return root
-
-def findMin(root, parent):
-	""" return the minimum node in the current tree and its parent """
-	# we use an ugly trick: the parent node is passed in as an argument
-	# so that eventually when the leftmost child is reached, the 
-	# call can return both the parent to the successor and the successor
-	if root.left:
-		return findMin(root.left, root)
-	else:
-		return [parent, root]
-
-def inOrderTraversal(root):
-    if not root:
-        return
-    inOrderTraversal(root.left)
-    print root.data
-    inOrderTraversal(root.right)
-
-def preOrderTraversal(root):
-    if not root:
-        return        
-    print root.data
-    preOrderTraversal(root.left)
-    preOrderTraversal(root.right)  
 
 node1 = Node(1)
 node2 = Node(2)
